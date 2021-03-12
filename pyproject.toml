@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "deepl-scraper-pp"
+version = "0.1.0"
+description = ""
+authors = ["freemt <yucongo+fmt@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+importlib-metadata = "^3.7.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+tbump = "^6.3.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
