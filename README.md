@@ -13,3 +13,8 @@ print(res)
 # '考我 试探我 测试我 试探'
 
 print(await deepl_tr("test me", to_lang="de"))
+# mich testen mich prüfen testen Sie mich
+
+text = "Pyppeteer has almost same API as puppeteer. More APIs are listed in the document
+print(await deepl_tr(text, to_lang="zh"))
+# Pyppeteer的API与puppeteer几乎相同。更多的API在文档中列出。
