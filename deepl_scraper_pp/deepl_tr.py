@@ -66,7 +66,7 @@ async def deepl_tr(
 
     url_ = f"{URL}#{from_lang}/{to_lang}/{quote(text)}"
 
-    selector = ".lmt__language_select--target > button > span"
+    # selector = ".lmt__language_select--target > button > span"
 
     with CodeTimer(name="fetching", unit="s"):
         _ = """
