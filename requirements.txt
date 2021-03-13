@@ -1,0 +1,28 @@
+appdirs==1.4.4
+atomicwrites==1.4.0; sys_platform == "win32"
+attrs==19.3.0
+colorama==0.4.4
+cssselect==1.1.0
+get-ppbrowser==0.1.2
+importlib-metadata==3.7.2; python_version < "3.8"
+linetimer==0.1.4
+logzero==1.6.3
+lxml==4.6.2
+more-itertools==8.7.0
+packaging==20.9
+pluggy==0.13.1
+py==1.10.0
+pydantic==1.8.1
+pyee==7.0.4
+pyparsing==2.4.7
+pyppeteer2==0.2.2
+pyquery==1.4.3
+pytest==5.4.3
+pytest-asyncio==0.14.0
+python-dotenv==0.15.0
+tqdm==4.59.0
+typing-extensions==3.7.4.3
+urllib3==1.26.3
+wcwidth==0.2.5
+websockets==8.1
+zipp==3.4.1; python_version < "3.8"

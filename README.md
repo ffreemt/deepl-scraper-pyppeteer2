@@ -5,7 +5,12 @@ scrape deepl using pyppeteer
 
 ## Usage
 
+## In an `ipython` session:
+
 ```python
+
+# ipython
+
 from deepl_scraper_pp.deepl_tr import deepl_tr
 
 res = await deepl_tr("test me")
@@ -15,6 +20,31 @@ print(res)
 print(await deepl_tr("test me", to_lang="de"))
 # mich testen mich prüfen testen Sie mich
 
-text = "Pyppeteer has almost same API as puppeteer. More APIs are listed in the document
+text = "Pyppeteer has almost same API as puppeteer. More APIs are listed in the document"
 print(await deepl_tr(text, to_lang="zh"))
 # Pyppeteer的API与puppeteer几乎相同。更多的API在文档中列出。
+```
+
+## in `python`
+
+```python
+import asyncio
+from deepl_scraper_pp.deepl_tr import deepl_tr
+
+async def main():
+    text1 = "test me"
+    text2 = "Pyppeteer has almost same API as puppeteer. More APIs are listed in the document"
+
+    coros = [deepl_tr(elm) for elm in [text1, text2]]
+    res = await asyncio.gather(*coros, return_exceptions=True)
+    print(res)
+
+loop = asyncio.get_event_loop()
+try:
+    loop.run_until_complete(main())
+finally:
+    loop.close()
+
+# output: ['考我 试探我 测试我 试探', 'Pyppeteer的API与puppeteer几乎相同。更多的API在文档中列出']
+
+```

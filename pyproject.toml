@@ -1,12 +1,14 @@
 [tool.poetry]
 name = "deepl-scraper-pp"
 version = "0.1.0"
-description = ""
-authors = ["freemt <yucongo+fmt@gmail.com>"]
+description = "scrape deepl via pyppeteer"
+authors = ["freemt"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/ffreemt/deepl-scraper-pyppeteer"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-importlib-metadata = "^3.7.2"
 linetimer = "^0.1.4"
 pyquery = "^1.4.3"
 logzero = "^1.6.3"
@@ -16,7 +18,6 @@ get-ppbrowser = "^0.1.2"
 pytest = "^5.2"
 tbump = "^6.3.1"
 ipython = "^7.21.0"
-pytest-asyncio = "^0.14.0"
 flake8 = "^3.8.4"
 
 [build-system]

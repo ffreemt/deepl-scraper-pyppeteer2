@@ -68,7 +68,11 @@ async def deepl_tr(
 
     # selector = ".lmt__language_select--target > button > span"
 
-    with CodeTimer(name="fetching", unit="s"):
+    if verbose < 11 or verbose is True:
+        _ = False  # silent
+    else:
+        _ = True
+    with CodeTimer(name="fetching", unit="s", silent=_):
         _ = """
         await page.goto(url0)
 

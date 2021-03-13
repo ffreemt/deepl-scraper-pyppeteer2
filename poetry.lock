@@ -134,6 +134,7 @@ python-dotenv = ">=0.15.0,<0.16.0"
 [[package]]
 category = "main"
 description = "Read metadata from Python packages"
+marker = "python_version < \"3.8\""
 name = "importlib-metadata"
 optional = false
 python-versions = ">=3.6"
@@ -594,6 +595,7 @@ version = "8.1"
 [[package]]
 category = "main"
 description = "Backport of pathlib-compatible object wrapper for zip files"
+marker = "python_version < \"3.8\""
 name = "zipp"
 optional = false
 python-versions = ">=3.6"
@@ -604,7 +606,7 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "6610902bb2070b438ce7f103d9a9e2583ed40bfa53dfa4e23f23a16be1475873"
+content-hash = "0e02fa57d00ea714c74460f83d1bc1db8e9fa725b29e1da3d05c45244e64308a"
 python-versions = "^3.7"
 
 [metadata.files]
