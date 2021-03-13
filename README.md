@@ -15,7 +15,7 @@ poetry add deepl-scraper-pp
 # poetry add deepl-scraper-pp@latest  # upgrade to the latest version
 ```
 
-or clone the repo (``git clone https://github.com/ffreemt/deepl-scraper-pyppeteer.git``) and install from the repo.
+or clone the repo (``git clone https://github.com/ffreemt/deepl-scraper-pyppeteer.git``) and install from it.
 
 ## Usage
 
