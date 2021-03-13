@@ -118,8 +118,8 @@ async def deepl_tr(
             doc = pq(await page.content())
             content_old = doc('.lmt__translations_as_text__text_btn').text()
 
-            selector = ".lmt__translations_as_text"
-            selector = ".lmt__textarea.lmt__target_textarea.lmt__textarea_base_style"
+            # selector = ".lmt__translations_as_text"
+            # selector = ".lmt__textarea.lmt__target_textarea.lmt__textarea_base_style"
 
             # selector = ".lmt__textarea.lmt__target_textarea"
             # selector = '.lmt__translations_as_text__text_btn'
