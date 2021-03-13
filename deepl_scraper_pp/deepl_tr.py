@@ -94,7 +94,7 @@ async def deepl_tr(
             deepl_tr.first_run = 1
             text_old = "_some unlikely random text_"
 
-        selector = "div.lmt__translations_as_text"
+        # selector = "div.lmt__translations_as_text"
         if text.strip() == text_old.strip():
             logger.debug(" ** early result: ** ")
             logger.debug("%s, %s", text, doc('.lmt__translations_as_text__text_btn').text())
