@@ -21,7 +21,7 @@ from linetimer import CodeTimer
 
 with CodeTimer(name="loading BROWER", unit="s"):
     # from deepl_tr_pp.deepl_tr_pp import deepl_tr_pp, LOOP, BROWSER, get_ppbrowser
-    from get_ppbrowser.get_ppbrowser import LOOP, BROWSER, get_ppbrowser
+    from get_ppbrowser.get_ppbrowser import LOOP, BROWSER
 
 with CodeTimer(name="start a page", unit="s"):
     URL = r"https://www.deepl.com/translator"
@@ -121,8 +121,8 @@ async def deepl_tr(
             selector = ".lmt__translations_as_text"
             selector = ".lmt__textarea.lmt__target_textarea.lmt__textarea_base_style"
 
-            selector = ".lmt__textarea.lmt__target_textarea"
-            selector = '.lmt__translations_as_text__text_btn'
+            # selector = ".lmt__textarea.lmt__target_textarea"
+            # selector = '.lmt__translations_as_text__text_btn'
             try:
                 await page.goto(url_)
             except Exception as exc:
