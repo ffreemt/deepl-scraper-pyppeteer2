@@ -31,13 +31,11 @@ with CodeTimer(name="start a page", unit="s"):
         LOOP.run_until_complete(PAGE.goto(URL, timeout=45 * 1000))
     except Exception as exc:
         logger.error("exc: %s, exiting", exc)
-        raise SystemExit(
-            "Unable to make initial connection to deelp"
-        ) from exc
+        raise SystemExit("Unable to make initial connection to deelp") from exc
 
 
 # fmt: off
-async def deepl(
+async def deepl_tr(
         text: str,
         from_lang: str = "auto",
         to_lang: str = "zh",
@@ -80,19 +78,26 @@ async def deepl(
             raise
         # """
 
-        doc = pq(await page.content())
+        try:
+            content = await page.content()
+        except Exception as exc:
+            logger.error(exc)
+            raise
+
+        doc = pq(content)
         text_old = doc('#source-dummydiv').text()
         logger.debug("Old source: %s", text_old)
 
         try:
-            deepl.first_run
+            deepl_tr.first_run
         except AttributeError:
-            deepl.first_run = 1
+            deepl_tr.first_run = 1
             text_old = "_some unlikely random text_"
 
         selector = "div.lmt__translations_as_text"
         if text.strip() == text_old.strip():
-            logger.debug("%s, early result:  %s", text, doc('.lmt__translations_as_text__text_btn').text())
+            logger.debug(" ** early result: ** ")
+            logger.debug("%s, %s", text, doc('.lmt__translations_as_text__text_btn').text())
             doc = pq(await page.content())
             content = doc('.lmt__translations_as_text__text_btn').text()
         else:
@@ -141,12 +146,14 @@ async def deepl(
             # loop until content changed
             idx = 0
             # bound = 50  # 5s
-            while idx < timeout:
+            while idx < timeout / 0.1:
                 idx += 1
                 await asyncio.sleep(.1)
                 doc = pq(await page.content())
                 content = doc('.lmt__translations_as_text__text_btn').text()
-                logger.debug("content_old: %s, content: %s", content_old, content)
+                logger.debug(
+                    "content_old: (%s), \n\tcontent: (%s)", content_old, content
+                )
 
                 if content_old != content and bool(content):
                     break
@@ -158,11 +165,12 @@ async def deepl(
     return content
 
 
-if __name__ == "__main__":
+async def main():
+    """Main."""
     import sys
 
     text = "test this and that and more"
-    res = LOOP.run_until_complete(deepl(text))
+    res = await deepl_tr(text)
     logger.info("%s, %s,", text, res)
 
     if len(sys.argv) > 1:
@@ -170,9 +178,29 @@ if __name__ == "__main__":
     else:
         text = "test this and that"
 
-    res = LOOP.run_until_complete(deepl(text))
+    res = await deepl_tr(text)
     logger.info("%s, %s,", text, res)
 
-    # text = "what's the matter?"
-    # res = LOOP.run_until_complete(deepl(text))
-    # logger.info("%s, %s,", text, res)
+
+if __name__ == "__main__":
+    try:
+        LOOP.run_until_complete(main())
+    except Exception as exc:
+        logger.error(exc)
+
+    _ = """
+    import sys
+
+    text = "test this and that and more"
+    res = LOOP.run_until_complete(deepl_tr(text))
+    logger.info("%s, %s,", text, res)
+
+    if len(sys.argv) > 1:
+        text = " ".join(sys.argv[1:])
+    else:
+        text = "test this and that"
+
+    res = LOOP.run_until_complete(deepl_tr(text))
+    logger.info("%s, %s,", text, res)
+
+    # """

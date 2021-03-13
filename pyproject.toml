@@ -8,11 +8,16 @@ authors = ["freemt <yucongo+fmt@gmail.com>"]
 python = "^3.7"
 importlib-metadata = "^3.7.2"
 linetimer = "^0.1.4"
+pyquery = "^1.4.3"
+logzero = "^1.6.3"
+get-ppbrowser = "^0.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 tbump = "^6.3.1"
 ipython = "^7.21.0"
+pytest-asyncio = "^0.14.0"
+flake8 = "^3.8.4"
 
 [build-system]
 requires = ["poetry>=0.12"]
