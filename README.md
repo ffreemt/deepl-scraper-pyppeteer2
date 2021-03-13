@@ -3,6 +3,20 @@
 
 scrape deepl using pyppeteer
 
+## Installation
+
+```bash
+pip install deepl-scraper-pp
+# pip install deepl-scraper-pp  # upgrade to the latest version
+```
+or
+```bash
+poetry add deepl-scraper-pp
+# poetry add deepl-scraper-pp@latest  # upgrade to the latest version
+```
+
+or clone the repo (``git clone https://github.com/ffreemt/deepl-scraper-pyppeteer.git``) and install from the repo.
+
 ## Usage
 
 ## In an `ipython` session:
@@ -48,3 +62,7 @@ finally:
 # output: ['考我 试探我 测试我 试探', 'Pyppeteer的API与puppeteer几乎相同。更多的API在文档中列出']
 
 ```
+
+## Disclaimer
+
+The pypi is beta and will likely remain beta -- use it at your own peril.
