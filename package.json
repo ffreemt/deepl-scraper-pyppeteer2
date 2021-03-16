@@ -9,7 +9,7 @@
   "scripts": {
     "pyright": "nodemon -w deepl_scraper_pp -w .venv -e .py -x pyright deepl_scraper_pp",
     "pytest": "nodemon -w tests -w deepl_scraper_pp -e .py -x pytest tests",
-    "style": "nodemon -w deepl_scraper_pp tests -x black tests deepl_scraper_pp && flake8.bat",
+    "style": "nodemon -w deepl_scraper_pp -x black tests deepl_scraper_pp && flake8.bat",
     "pylint": "nodemon -w deepl_scraper_pp -e .py -x pylint deepl_scraper_pp",
     "test:deepl_tr": "nodemon -w tests -e .py -x pytest -k deepl_tr tests"
   }
