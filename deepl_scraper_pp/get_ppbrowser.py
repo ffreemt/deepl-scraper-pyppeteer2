@@ -1,0 +1,121 @@
+"""Get a valid pyppeteer browser.
+
+from exttend-euserv, extracted from deepl_tr_pp.
+
+rid of LOOP and BROWSER
+"""
+# pylint: disable=too-many-arguments, too-many-locals, too-many-branches, too-many-statements
+
+from typing import (
+    Any,
+    Optional,
+    Union,
+)
+
+from pathlib import Path
+
+# import asyncio
+import platform
+import tempfile
+
+import pyppeteer
+from pyppeteer import launch
+from pydantic import BaseSettings, AnyUrl  # pylint:
+
+import logzero
+from logzero import logger
+
+
+class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
+    """Configure params DEBUG HEADFUL PROXY."""
+
+    debug: bool = False
+    headful: bool = False
+    proxy: Optional[AnyUrl] = None
+
+    class Config:  # pylint: disable=too-few-public-methods
+        """Config."""
+
+        env_prefix = "PPBROWSER_"
+        # extra = "allow"
+        env_file = ".env"
+        env_file_encoding = "utf-8"  # pydantic doc
+
+        logger.info(
+            "env_prefix: %s, env_file: %s", env_prefix, Path(env_file).resolve()
+        )
+
+
+CONFIG = Settings()  # CONFIG = Settings(env=dotenv.find_dotenv())
+HEADFUL = CONFIG.headful
+DEBUG = CONFIG.debug
+PROXY = "" if CONFIG.proxy is None else CONFIG.proxy
+
+logger.info(" HEADFUL: %s", HEADFUL)
+logger.info(" DEBUG: %s", DEBUG)
+logger.info(" PROXY: %s", PROXY)
+if DEBUG:
+    logzero.loglevel(10)
+
+
+# fmt: off
+async def get_ppbrowser(
+        headless: bool = not HEADFUL,
+        proxy: Optional[str] = PROXY,
+        executable_path: Optional[Union[str, Path]] = None,
+        **kwargs: Any,
+) -> pyppeteer.browser.Browser:
+    # fmt: on
+    """Get a puppeeter browser.
+
+    headless=not HEADFUL; proxy: str = PROXY
+    """
+    # half-hearted attempt to use an existing chrome
+    if Path(r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe").exists():
+        executable_path = r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+    elif Path(r"D:\Program Files (x86)\Google\Chrome\Application\chrome.exe").exists():
+        executable_path = r"D:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+
+    _ = """
+    # devtools = False
+    if not headless:  # if headless is False
+        devtools = True  # pop devtools, auto headless=False
+    # """
+
+    # tempdir = Path("/tmp" if platform.system() == "Darwin" else tempfile.gettempdir())
+    # mkdir a random dir for each session
+
+    # tfile = tempfile.NamedTemporaryFile()
+    # tfile.close()
+
+    tname = tempfile.NamedTemporaryFile().name
+    tempdir = Path("/tmp" if platform.system() == "Darwin" else tname)
+    tempdir.mkdir(exist_ok=True)
+
+    try:
+        browser = await launch(
+            args=[
+                "--disable-infobars",
+                "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
+                "--window-size=1440x900",
+                # "--autoClose=False",
+                f"--proxy-server={proxy}",
+                "--disable-popup-blocking",
+                "--ignoreHTTPSErrors"
+            ],
+            ignoreDefaultArgs=[
+                "--enable-automation",  # set window.navigator.webdriver to undefined
+            ],
+            executablePath=executable_path,  # use chrome
+            # autoClose=False,
+            headless=headless,
+            # devtools=devtools,  # replace headless
+            dumpio=True,
+            # userDataDir=".",
+            userDataDir=tempdir,
+        )
+    except Exception as exc:
+        logger.error("get_ppbrowser exc: %s", exc)
+        raise
+
+    return browser

@@ -15,16 +15,22 @@ from typing import Union
 import asyncio
 from urllib.parse import quote
 from pyquery import PyQuery as pq
+import pyppeteer
+
 import logzero
 from logzero import logger
 from linetimer import CodeTimer
 
+# from get_ppbrowser.get_ppbrowser import get_ppbrowser
+
+URL = r"https://www.deepl.com/translator"
+
+_ = """
 with CodeTimer(name="loading BROWER", unit="s"):
     # from deepl_tr_pp.deepl_tr_pp import deepl_tr_pp, LOOP, BROWSER, get_ppbrowser
     from get_ppbrowser.get_ppbrowser import LOOP, BROWSER
 
 with CodeTimer(name="start a page", unit="s"):
-    URL = r"https://www.deepl.com/translator"
     # URL = 'https://www.deepl.com/translator#auto/zh/'
     PAGE = LOOP.run_until_complete(BROWSER.newPage())
     try:
@@ -32,6 +38,7 @@ with CodeTimer(name="start a page", unit="s"):
     except Exception as exc:
         logger.error("exc: %s, exiting", exc)
         raise SystemExit("Unable to make initial connection to deelp") from exc
+# """
 
 
 # fmt: off
@@ -39,7 +46,7 @@ async def deepl_tr(
         text: str,
         from_lang: str = "auto",
         to_lang: str = "zh",
-        page=PAGE,
+        page=None,
         verbose: Union[bool, int] = False,
         timeout: float = 5,
 ):
@@ -54,13 +61,37 @@ async def deepl_tr(
     """
     #
 
+    # set verbose=40 to turn most things off
     if isinstance(verbose, bool):
-        if not verbose:
+        if verbose:
+            logzero.setup_default_logger(level=10)
+        else:
             logzero.setup_default_logger(level=20)
-    else:
+    else:  # integer: log_level
         logzero.setup_default_logger(level=verbose)
 
     logger.debug(" Entry ")
+
+    if page is None:
+        try:
+            # browser = await get_ppbrowser()
+            browser = await pyppeteer.launch()
+        except Exception as exc:
+            logger.error(exc)
+            raise
+
+        try:
+            page = await browser.newPage()
+        except Exception as exc:
+            logger.error(exc)
+            raise
+
+        url = r"https://www.deepl.com/translator"
+        try:
+            await page.goto(url, timeout=45 * 1000)
+        except Exception as exc:
+            logger.error(exc)
+            raise
 
     url0 = f"{URL}#{from_lang}/{to_lang}/"
 
@@ -188,9 +219,18 @@ async def main():
 
 if __name__ == "__main__":
     try:
-        LOOP.run_until_complete(main())
+        loop = asyncio.get_event_loop()
     except Exception as exc:
         logger.error(exc)
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    try:
+        loop.run_until_complete(main())
+    except Exception as exc:
+        logger.error(exc)
+    finally:
+        loop.close()
 
     _ = """
     import sys
