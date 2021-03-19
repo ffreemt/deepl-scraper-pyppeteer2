@@ -1,6 +1,6 @@
 {
   "name": "deepl-scraper-pyppeteer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "deepl scraper pp",
   "main": "index.js",
   "repository": "git@github.com:ffreemt/deepl-scraper-pyppeteer.git",
