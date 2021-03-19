@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "deepl-scraper-pp"
-version = "0.1.2-alpha.0"
+version = "0.1.2"
 description = "scrape deepl via pyppeteer"
 authors = ["freemt"]
 license = "MIT"
