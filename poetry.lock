@@ -113,25 +113,18 @@ pyflakes = ">=2.2.0,<2.3.0"
 
 [[package]]
 name = "get-ppbrowser"
-version = "0.1.3-alpha.1"
+version = "0.1.3"
 description = "Create a valid pyppeteer browser"
 category = "main"
 optional = false
-python-versions = "^3.7"
-develop = false
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-logzero = "^1.6.3"
-pydantic = "^1.7.3"
-pyppeteer2 = "^0.2.2"
-pytest-asyncio = "^0.14.0"
-python-dotenv = "^0.15.0"
-
-[package.source]
-type = "git"
-url = "https://github.com/ffreemt/get-ppbrowser.git"
-reference = "dev"
-resolved_reference = "496217fb2fae185829dcfe1e89d7587e4c9738ec"
+logzero = ">=1.6.3,<2.0.0"
+pydantic = ">=1.7.3,<2.0.0"
+pyppeteer2 = ">=0.2.2,<0.3.0"
+pytest-asyncio = ">=0.14.0,<0.15.0"
+python-dotenv = ">=0.15.0,<0.16.0"
 
 [[package]]
 name = "importlib-metadata"
@@ -597,7 +590,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "11d5ed4b78d47e4fc99ef81bdf29d44b2e6e320eed7b2eb9f1b5c9ad5bb25ffd"
+content-hash = "681bb2ad49de63e45660cae27efd96c0f5ccbd79f1d670d87d8bddb4702695c8"
 
 [metadata.files]
 appdirs = [
@@ -647,7 +640,10 @@ flake8 = [
     {file = "flake8-3.8.4-py2.py3-none-any.whl", hash = "sha256:749dbbd6bfd0cf1318af27bf97a14e28e5ff548ef8e5b1566ccfb25a11e7c839"},
     {file = "flake8-3.8.4.tar.gz", hash = "sha256:aadae8761ec651813c24be05c6f7b4680857ef6afaae4651a4eccaef97ce6c3b"},
 ]
-get-ppbrowser = []
+get-ppbrowser = [
+    {file = "get-ppbrowser-0.1.3.tar.gz", hash = "sha256:9788ba29855bd75005f96d350ef5b34b1a16e754f799ff6879e100707eaa0076"},
+    {file = "get_ppbrowser-0.1.3-py3-none-any.whl", hash = "sha256:3f5360ffb253accd0284b424acf0ff8dab1ed69ef442bb38a5773c8fe57f6327"},
+]
 importlib-metadata = [
     {file = "importlib_metadata-3.7.2-py3-none-any.whl", hash = "sha256:407d13f55dc6f2a844e62325d18ad7019a436c4bfcaee34cda35f2be6e7c3e34"},
     {file = "importlib_metadata-3.7.2.tar.gz", hash = "sha256:18d5ff601069f98d5d605b6a4b50c18a34811d655c55548adc833e687289acde"},
