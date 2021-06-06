@@ -197,6 +197,9 @@ async def deepl_tr(
 
     logger.debug(" Fini ")
 
+    await page.close()
+    await browser.close()
+    
     return content
 
 
