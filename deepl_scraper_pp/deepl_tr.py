@@ -199,6 +199,7 @@ async def deepl_tr(
 
     await page.close()
     await browser.close()
+    browser.process.communicate() 
     
     return content
 
