@@ -6,24 +6,17 @@ rid of LOOP and BROWSER
 """
 # pylint: disable=too-many-arguments, too-many-locals, too-many-branches, too-many-statements
 
-from typing import (
-    Any,
-    Optional,
-    Union,
-)
-
-from pathlib import Path
-
 # import asyncio
 import platform
 import tempfile
-
-import pyppeteer
-from pyppeteer import launch
-from pydantic import BaseSettings, AnyUrl  # pylint:
+from pathlib import Path
+from typing import Any, Optional, Union
 
 import logzero
+import pyppeteer
 from logzero import logger
+from pydantic import AnyUrl, BaseSettings  # pylint:
+from pyppeteer import launch
 
 
 class Settings(BaseSettings):  # pylint: disable=too-few-public-methods

@@ -1,4 +1,4 @@
-from deepl_scraper_pp import __version__
+from deepl_scraper_pp2 import __version__
 
 
 def test_version():

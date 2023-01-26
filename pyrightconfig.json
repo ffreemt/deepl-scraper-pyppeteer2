@@ -1,5 +1,5 @@
 {
-  "include": ["tests", "deepl_scraper_pp"],
+  "include": ["tests", "deepl_scraper_pp2"],
   "venvPath": ".venv/Scripts",
   "reportTypeshedErrors": false,
   "reportMissingImports": true,

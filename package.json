@@ -1,16 +1,16 @@
 {
-  "name": "deepl-scraper-pyppeteer",
+  "name": "deepl-scraper-pyppeteer2",
   "version": "0.1.2",
-  "description": "deepl scraper pp",
+  "description": "deepl scraper pp2",
   "main": "index.js",
-  "repository": "git@github.com:ffreemt/deepl-scraper-pyppeteer.git",
+  "repository": "git@github.com:ffreemt/deepl-scraper-pyppeteer2.git",
   "author": "freemt",
   "license": "MIT",
   "scripts": {
-    "pyright": "nodemon -w deepl_scraper_pp -w tests -w .venv -e .py -x pyright deepl_scraper_pp tests",
-    "pytest": "nodemon -w tests -w deepl_scraper_pp -e .py -x pytest tests",
-    "black": "nodemon  -w tests -w deepl_scraper_pp -e .py -x \"black tests deepl_scraper_pp && python -m flake8\"",
-    "pylint": "nodemon -w deepl_scraper_pp -e .py -x pylint deepl_scraper_pp",
+    "pyright": "nodemon -w deepl_scraper_pp2 -w tests -w .venv -e .py -x pyright deepl_scraper_pp tests",
+    "pytest": "nodemon -w tests -w deepl_scraper_pp2 -e .py -x pytest tests",
+    "black": "nodemon  -w tests -w deepl_scraper_pp2 -e .py -x \"black tests deepl_scraper_pp && python -m flake8\"",
+    "pylint": "nodemon -w deepl_scraper_pp2 -e .py -x pylint deepl_scraper_pp",
     "test:deepl_tr": "nodemon -w tests -e .py -x pytest -k deepl_tr tests"
   }
 }

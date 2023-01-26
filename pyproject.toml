@@ -1,18 +1,18 @@
 [tool.poetry]
-name = "deepl-scraper-pp"
-version = "0.1.2"
-description = "scrape deepl via pyppeteer"
+name = "deepl-scraper-pp2"
+version = "0.1.0a0"
+description = "scrape deepl via pyppeteer2"
 authors = ["freemt"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/ffreemt/deepl-scraper-pyppeteer"
+repository = "https://github.com/ffreemt/deepl-scraper-pyppeteer2"
 
 [tool.poetry.dependencies]
-python = "^3.7"
-linetimer = "^0.1.4"
+python = "^3.8.3"
 pyquery = "^1.4.3"
 logzero = "^1.6.3"
 get-ppbrowser = "^0.1.3"
+about-time = "^4.2.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

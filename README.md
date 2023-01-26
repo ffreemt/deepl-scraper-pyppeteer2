@@ -1,21 +1,24 @@
-# deepl-scraper-pp
-[![tests](https://github.com/ffreemt/deepl-scraper-pyppeteer/actions/workflows/routine-tests.yml/badge.svg)][![python](https://img.shields.io/static/v1?label=python+&message=3.7%2B&color=blue)](https://img.shields.io/static/v1?label=python+&message=3.7%2B&color=blue)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/deepl-scraper-pp.svg)](https://badge.fury.io/py/deepl-scraper-pp)
+# deepl-scraper-pp2
+[![tests](https://github.com/ffreemt/deepl-scraper-pyppeteer2/actions/workflows/routine-tests.yml/badge.svg)][![python](https://img.shields.io/static/v1?label=python+&message=3.8.3%2B&color=blue)](https://img.shields.io/static/v1?label=python+&message=3.8.3%2B&color=blue)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/deepl-scraper-pp.svg)](https://badge.fury.io/py/deepl-scraper-pp2)
 
-scrape deepl using pyppeteer, cross platform (Windows/MacOS/Linux)
+scrape deepl using pyppeteer2, cross platform (Windows/MacOS/Linux)
+
+## Intro
+`deepl-scraper-pp2` is more or less deepl-scraper-pp. `deepl-scraper-pp2` however preserves newlines in the translated text. Hence, it will make life easier when trying to process large chunks of text. `deepl-scraper-pp2` is intended for `deepl-fastapi2` used in `deepl-tr-webui`.
 
 ## Installation
 
 ```bash
-pip install deepl-scraper-pp
-# pip install deepl-scraper-pp  # upgrade to the latest version
+pip install deepl-scraper-pp2
+# pip install deepl-scraper-pp2  # upgrade to the latest version
 ```
 or
 ```bash
-poetry add deepl-scraper-pp
-# poetry add deepl-scraper-pp@latest  # upgrade to the latest version
+poetry add deepl-scraper-pp2
+# poetry add deepl-scraper-pp2@latest  # upgrade to the latest version
 ```
 
-or clone the repo (``git clone https://github.com/ffreemt/deepl-scraper-pyppeteer.git``) and install from it.
+or clone the repo (``git clone https://github.com/ffreemt/deepl-scraper-pyppeteer2.git``) and install from it.
 
 ## Usage
 
@@ -25,7 +28,7 @@ or clone the repo (``git clone https://github.com/ffreemt/deepl-scraper-pyppetee
 
 # ipython
 
-from deepl_scraper_pp.deepl_tr import deepl_tr
+from deepl_scraper_pp2.deepl_tr import deepl_tr
 
 res = await deepl_tr("test me")
 print(res)
@@ -43,7 +46,7 @@ print(await deepl_tr(text, to_lang="zh"))
 
 ```python
 import asyncio
-from deepl_scraper_pp.deepl_tr import deepl_tr
+from deepl_scraper_pp2.deepl_tr import deepl_tr
 
 async def main():
     text1 = "test me"
@@ -59,7 +62,7 @@ try:
 finally:
     loop.close()
 
-# output: ['考我 试探我 测试我 试探', 'Pyppeteer的API与puppeteer几乎相同。更多的API在文档中列出']
+# output: ['考我', 'Pyppeteer的API与puppeteer几乎相同。更多的API在文档中列出']
 
 ```
 
