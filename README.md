@@ -43,6 +43,7 @@ python -m deepl_scraper_pp2.run_uvicorn
 
 #### and consume the REST API
 ```python
+import requests
 res = requests.post(
   "http://127.0.0.1:8000/text",
   json={
