@@ -51,7 +51,8 @@ res = requests.post(
     headers={"accept": "application/json", "Content-Type": "application/json"}
 )
 print(res.json())
-# {'q': {'text': 'test 1\n\ntest2', 'from_lang': None, 'to_lang': 'zh', 'description': None}, 'result': '测试1\n\n测试2'}
+# {'q': {'text': 'test 1\n\ntest2', 'from_lang': None, 'to_lang': 'zh', 'description': None},
+'result': '测试1\n\n测试2'}
 ```
 
 Consult [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) for details.
