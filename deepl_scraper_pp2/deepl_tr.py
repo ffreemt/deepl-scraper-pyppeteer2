@@ -8,8 +8,10 @@ from pathlib import Path
 import os
 os.environ['PYTHONPATH'] = Path(r"../get-ppbrowser")
 """
-# pylint: disable=too-many-arguments, too-many-locals, too-many-branches, too-many-statements, broad-except
 import asyncio
+
+# pylint: disable=too-many-arguments, too-many-locals, too-many-branches, too-many-statements, broad-except
+import atexit
 
 # import os
 import re
@@ -19,13 +21,14 @@ from typing import Any, Callable, Optional, Union
 from urllib.parse import quote
 
 import logzero
-
-# import pyppeteer
+import nest_asyncio
+import pyppeteer
 from about_time import about_time
 from get_ppbrowser.get_ppbrowser import get_ppbrowser
 from logzero import logger
 from pyquery import PyQuery as pq
 
+nest_asyncio.apply()
 URL = r"https://www.deepl.com/translator"
 
 _ = """
@@ -43,9 +46,29 @@ with CodeTimer(name="start a page", unit="s"):
         raise SystemExit("Unable to make initial connection to deelp") from exc
 # """
 
+# _ = """
+BROWSER = asyncio.get_event_loop().run_until_complete(
+    pyppeteer.launch(
+        autoClose=False,  # fix: https://github.com/pyppeteer/pyppeteer/issues/143
+    )
+)
+PAGE = asyncio.get_event_loop().run_until_complete(BROWSER.newPage())
+
+
+async def cleanup_async():
+    """Cleanup at exit."""
+    await PAGE.close()
+    await BROWSER.close()
+
+
+@atexit.register
+def cleanup():
+    """Register cleanup_async."""
+    asyncio.get_event_loop().run_until_complete(cleanup_async())
+
 
 def with_func_attrs(**attrs: Any) -> Callable:
-    """with_func_attrs"""
+    """Define with_func_attrs."""
 
     def with_attrs(fct: Callable) -> Callable:
         for key, val in attrs.items():
@@ -56,16 +79,16 @@ def with_func_attrs(**attrs: Any) -> Callable:
 
 
 @with_func_attrs(from_lang="", to_lang="", text="")
-async def deepl_tr(
-    text: str,
-    from_lang: str = "auto",
-    to_lang: str = "zh",
+async def deepl_tr(  # noqa: C901
+    text: Optional[str],
+    from_lang: Optional[str] = "auto",
+    to_lang: Optional[str] = "zh",
     page=None,
     verbose: Union[bool, int] = False,
     timeout: float = 5,
     headless: Optional[bool] = None,
 ):
-    """Deepl via pyppeteer.
+    r"""Deepl via pyppeteer.
 
     text = "Test it and\n\n more"
     from_lang="auto"
@@ -73,7 +96,16 @@ async def deepl_tr(
     to_lang="zh"
     verbose=True
     """
-    #
+    if text is None:
+        return ""
+    if not str(text).strip():
+        return ""
+    if from_lang is None:
+        from_lang = "auto"
+    if to_lang is None:
+        to_lang = "zh"
+    if page is None:
+        page = PAGE
 
     # set verbose=40 to turn most things off
     if isinstance(verbose, bool):
@@ -127,9 +159,10 @@ async def deepl_tr(
         if page is None:
             try:
                 if headless is None:
-                    browser = get_ppbrowser()
+                    browser = await get_ppbrowser()
                 else:
-                    browser = get_ppbrowser(headless=headless)
+                    browser = await get_ppbrowser(headless=headless)
+                deepl_tr.browser = browser
             except Exception as exc:
                 logger.error(exc)
                 raise
@@ -178,6 +211,7 @@ async def deepl_tr(
             content = await page.content()
         except Exception as exc:
             logger.error(exc)
+            logger.exception(exc)
             raise
 
         doc = pq(content)
@@ -280,11 +314,12 @@ async def deepl_tr(
 
 async def main():
     """Main."""
-    text = "test this and that and more"
-    res = deepl_tr(text)
+    text = "test this and that\n\n and more"
+    res = await deepl_tr(text)
     logger.info("%s, %s, time elased: %s", text, res, deepl_tr.dur)
 
-    res = await deepl_tr(text, to_lang="de")
+    # res = await deepl_tr(text, to_lang="de")
+    res = await deepl_tr(text, to_lang="de", page=PAGE)
 
     logger.info("%s, %s, time elased: %s", text, res, deepl_tr.dur)
 
@@ -298,8 +333,33 @@ async def main():
     res = await deepl_tr(text)
     logger.info("%s, %s,", text, res)
 
+    # await page.close()
+    # await browser.close()
+
+
+def test_para_info1():
+    """Test para_info, no page provided."""
+    text = "test this \n\nand more"
+
+    # res = await deepl_tr(text)
+
+    loop = asyncio.get_event_loop()
+    res = loop.run_until_complete(deepl_tr(text))
+
+    print(text, res)
+
+    assert len(res.split("\n\n")) == 2
+
+    # use page from the previous call of deepl_tr
+    loop.run_until_complete(deepl_tr.page.close())
+    # loop.run_until_complete(deepl_tr.browser.close())
+
 
 if __name__ == "__main__":
+    asyncio.run(main())
+    # test_para_info1()
+
+    _ = """
     try:
         loop = asyncio.get_event_loop()
     except Exception as exc_:
@@ -313,6 +373,7 @@ if __name__ == "__main__":
         logger.error(exc_)
     finally:
         loop.close()
+    # """
 
     _ = """
     import sys

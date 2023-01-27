@@ -9,7 +9,7 @@ import pytest
 from logzero import logger
 
 # from get_ppbrowser.get_ppbrowser import get_ppbrowser
-from deepl_scraper_pp.deepl_tr import deepl_tr
+from deepl_scraper_pp2.deepl_tr import deepl_tr
 
 # from deepl_scraper_pp.get_ppbrowser import get_ppbrowser
 

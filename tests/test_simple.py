@@ -2,6 +2,7 @@
 import asyncio
 import pyppeteer
 from deepl_scraper_pp2.deepl_tr import deepl_tr
+
 # from get_ppbrowser.get_ppbrowser import get_ppbrowser
 
 

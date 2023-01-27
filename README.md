@@ -4,7 +4,7 @@
 scrape deepl using pyppeteer2 with para info, cross platform (Windows/MacOS/Linux)
 
 ## Intro
-`deepl-scraper-pp2` is more or less deepl-scraper-pp. `deepl-scraper-pp2` however preserves newlines in the translated text. Hence, it will make life easier when trying to process large chunks of text. `deepl-scraper-pp2` is intended for `deepl-fastapi2` used in `deepl-tr-webui`.
+`deepl-scraper-pp2` is more or less deepl-scraper-pp. `deepl-scraper-pp2` however preserves newlines in the translated text. Hence, it will make life easier when trying to process large chunks of text. `deepl-scraper-pp2` is originally intended for `deepl-tr-webui` but can be used elsewhere as well.
 
 ## Installation
 
@@ -22,49 +22,39 @@ or clone the repo (``git clone https://github.com/ffreemt/deepl-scraper-pyppetee
 
 ## Usage
 
-## In an `ipython` session:
-
-```python
-
-# ipython
-
-from deepl_scraper_pp2.deepl_tr import deepl_tr
-
-res = await deepl_tr("test me")
-print(res)
-# '考我 试探我 测试我 试探'
-
-print(await deepl_tr("test me", to_lang="de"))
-# mich testen mich prüfen testen Sie mich
-
-text = "Pyppeteer has almost same API as puppeteer. More APIs are listed in the document"
-print(await deepl_tr(text, to_lang="zh"))
-# Pyppeteer的API与puppeteer几乎相同。更多的API在文档中列出。
-```
-
-## in `python`
+### in `python`
 
 ```python
 import asyncio
 from deepl_scraper_pp2.deepl_tr import deepl_tr
 
-async def main():
-    text1 = "test me"
-    text2 = "Pyppeteer has almost same API as puppeteer. More APIs are listed in the document"
+print(asyncio.run(deepl_tr("test 1 \n\n test 2"))
 
-    coros = [deepl_tr(elm) for elm in [text1, text2]]
-    res = await asyncio.gather(*coros, return_exceptions=True)
-    print(res)
-
-loop = asyncio.get_event_loop()
-try:
-    loop.run_until_complete(main())
-finally:
-    loop.close()
-
-# output: ['考我', 'Pyppeteer的API与puppeteer几乎相同。更多的API在文档中列出']
-
+# '测试1 \n\n  测试2'
 ```
+
+### Or start a local server
+```bash
+uvicorn deepl_scraper_pp2.deepl_server:app
+
+# or
+python -m deepl_scraper_pp2.run_uvicorn
+```
+
+#### and consume the REST API
+```python
+res = requests.post(
+  "http://127.0.0.1:8000/text",
+  json={
+    "text": "test 1\n\ntest2",
+    "to_lang": "zh"},
+    headers={"accept": "application/json", "Content-Type": "application/json"}
+)
+print(res.json())
+# {'q': {'text': 'test 1\n\ntest2', 'from_lang': None, 'to_lang': 'zh', 'description': None}, 'result': '测试1\n\n测试2'}
+```
+
+Consult [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) for details.
 
 ## Disclaimer
 
