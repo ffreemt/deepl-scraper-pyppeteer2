@@ -7,6 +7,7 @@ from pypi deepl-fastapi\deepl_fastapi run_uvicorn.py
 # pylint: disable=invalid-name, duplicate-code
 # from pathlib import Path
 # import portalocker
+from typing import Optional
 from signal import SIG_DFL, SIGINT, signal
 
 import uvicorn
@@ -14,19 +15,23 @@ from logzero import logger
 
 
 def run_uvicorn(
-    host="127.0.0.1",
+    host: Optional[str] = None,  # default to "127.0.0.1",
     port=8000,
-    # debug=False,
+    debug=False,
     reload=False,
 ):
     """Run uvicorn."""
+    if debug:
+        log_level = "debug"
+    else:
+        log_level = None
     uvicorn.run(
         # app="deepl_fastapi.deepl_server:app",
         app="deepl_scraper_pp2.deepl_server:app",
         host=host,
         port=port,
         reload=reload,
-        # debug=debug,
+        log_level=log_level,
         # workers=2,
         # loop="asyncio",  # default "auto"
         # loop="uvloop",  # posix (linux and mac) only
